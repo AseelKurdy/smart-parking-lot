@@ -1,0 +1,15 @@
+# Normalise line endings in text files; keep PowerShell scripts as Windows files
+* text=auto
+*.ps1 text eol=crlf
+
+# Binary deliverables
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.docx binary
+
+# Show the firmware as C++ in the language statistics
+*.ino linguist-language=C++
+*.h linguist-language=C++

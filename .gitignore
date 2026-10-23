@@ -1,0 +1,20 @@
+# Build outputs and caches
+__pycache__/
+*.pyc
+build/
+*.exe
+*.o
+*.trf
+
+# Editors and tools
+.vscode/
+.idea/
+.claude/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Large media is published as a GitHub Release asset, never committed
+*.mp4
+*.mov

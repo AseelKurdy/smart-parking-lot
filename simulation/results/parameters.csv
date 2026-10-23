@@ -1,0 +1,25 @@
+name,value,unit,source,where,verified,note,sweep_low,sweep_high
+stall_width_m,2.5,m,MOT2000,"Ch. D, Table 3 p.25; Table 9 p.35",full text,Standard 90-degree stall width at service level 1 (pairs with a 5.80 m aisle).,,
+stall_depth_m,5.0,m,MOT2000,"Ch. D, Sec. 4.1 p.11",full text,Minimum 90-degree stall length: 4.75 m design car + 0.25 m.,,
+aisle_width_m,5.8,m,MOT2000,"Ch. D, Table 3 p.25; Sec. 13.3 p.60",full text,Two-way aisle for 2.50 m stalls at service level 1.,,
+ramp_max_grade,0.15,-,MOT2000,"Ch. D, Sec. 12.5 p.54",full text,Maximum ramp gradient at service levels 1-2 (17% at level 3).,,
+ramp_transition_m,3.0,m,MOT2000,"Ch. D, Sec. 12.5 p.54",full text,Each end of the ramp has a 3 m transition at half the gradient.,,
+floor_rise_m,3.0,m,assumption,,n/a,"No Israeli figure found; MoT only gives 2.20 m clear height. US garages are typically 3.2-3.5 m floor to floor, per PURINTON2012.",2.8,3.5
+search_speed_kmh,10.0,km/h,MOT2000,"Ch. D, Sec. 11 p.45",full text,"MoT design assumption for driving inside a parking facility (a design value, not a measurement). Shoup (2006) observed ~13 km/h while cruising on-street.",5.0,20.0
+fuel_rate_l_per_h,1.0,L/h,ARGONNE2013,Table 1; Conclusions,full text,"Measured idle consumption 0.279 cc/s = 1.0 L/h (2.5 L sedan); passenger cars 0.76-1.9 L/h. At crawl speed, consumption is modelled per hour, not per km.",0.8,2.0
+co2_kg_per_l,2.35,kg/L,EPA_GHG,web page,official page,"8,887 g CO2 per gallon of gasoline.",,
+fuel_price_ils_per_l,8.27,ILS/L,MOE2026,p.1,official page,"95-octane self-service, October 2026, including VAT.",,
+value_of_time_ils_per_h,27.31,ILS/h,PRAT2021,Table 4.1 p.118,full text,Value of travel time for non-work trips (2020 prices); parking search counts as travel time (p.115).,25.0,40.0
+mean_stay_min,88.0,min,HUANG2020,Table 2 p.6,full text,Mall garage: gamma-distributed stays with means 82.5-93.7 min.,82.5,93.7
+stay_gamma_shape,1.8,-,HUANG2020,Table 2 p.6,full text,Reported gamma shapes 1.12-2.53; mid-range value chosen.,1.12,2.53
+target_occupancy,0.85,-,LEVY2013,pp.788-789,full text,Search effort becomes noticeable above ~85% occupancy and important above 92-93%.,0.5,0.98
+operating_hours_per_day,12.0,h,assumption,,n/a,Typical mall opening hours (10:00-22:00); only used to turn per-car savings into yearly totals.,10.0,16.0
+garage_floors,3.0,floors,assumption,,n/a,Main scenario: a representative small multi-storey garage.,,
+garage_aisles_per_floor,3.0,aisles,assumption,,n/a,"Parallel two-way aisles per floor, stalls on both sides, cross aisles at both ends.",,
+garage_rows_per_aisle,12.0,rows,assumption,,n/a,12 stalls per side = 30 m aisles; 3 floors x 3 aisles x 2 sides x 12 = 216 stalls.,,
+search_visibility_p,1.0,-,assumption,,n/a,"Chance that a searching driver notices a free stall they pass. 1.0 = sees every one, the most favourable case for the driver, so the system's savings are a lower bound.",0.5,1.0
+reservation_timeout_s,60.0,s,derived,,n/a,Demo value. Real-world bound: farthest spot / search speed + parking manoeuvre margin.,,
+lane_step_m,2.5,,derived,,,,,
+lane_to_stall_m,5.4,,derived,,,,,
+ramp_length_m,23.0,,derived,,,,,
+search_speed_mps,2.778,,derived,,,,,
