@@ -18,6 +18,10 @@
   <img src="media/model_overview.jpg" alt="The 1:100 model: two floors, a ramp, the entrance sensor on its post and the ESP32 board" width="760">
 </p>
 
+<p align="center">
+  <a href="https://github.com/AseelKurdy/smart-parking-lot/releases/tag/v1.0"><img src="https://img.shields.io/badge/%E2%96%B6%20Watch%20the%20demo%20video-3%20min-e07a2e?style=for-the-badge" alt="Watch the 3-minute demo video"></a>
+</p>
+
 B.Sc. IoT project, Technion – Israel Institute of Technology, 2026.
 **Authors:** Aseel Kurdy · Nayef Habiballah · Osama Abdulhalim.
 
@@ -56,13 +60,14 @@ Everything runs on the single ESP32 board; there is no PC in the loop.
 ## Demo
 
 <p align="center">
-  <img src="media/demo_wrong_spot.gif" alt="A car assigned to stall 1 is parked in stall 3: the dashboard flags stall 3 red and releases stall 1" width="720"><br>
-  <sub>A driver ignores the system and parks in stall 3: the dashboard turns stall 3 red and releases the reserved stall 1 immediately.</sub>
+  <a href="https://github.com/AseelKurdy/smart-parking-lot/releases/tag/v1.0"><img src="media/demo_wrong_spot.gif" alt="A car assigned to stall 1 is parked in stall 3: the dashboard flags stall 3 red and releases stall 1" width="720"></a><br>
+  <sub>A driver ignores the system and parks in stall 3: the dashboard turns stall 3 red and releases the reserved stall 1 immediately. Click for the full video.</sub>
 </p>
 
-The full 3-minute video (narrated, with the model and the dashboard side by side) is attached to the
-[**v1.0 release**](https://github.com/AseelKurdy/smart-parking-lot/releases/tag/v1.0)
-([direct download, MP4](https://github.com/AseelKurdy/smart-parking-lot/releases/download/v1.0/SmartParking_demo.mp4)).
+**Full demo video (3 min, narrated):** the model and the live dashboard side by side: a new car gets the nearest stall, parks in time, a reservation expires, and a driver parks in the wrong stall.
+
+- ▶ **[Watch / download `SmartParking_demo.mp4`](https://github.com/AseelKurdy/smart-parking-lot/releases/download/v1.0/SmartParking_demo.mp4)** (112 MB)
+- or open the **[v1.0 release page](https://github.com/AseelKurdy/smart-parking-lot/releases/tag/v1.0)**
 
 <p align="center">
   <img src="media/demo_split_screen.jpg" alt="Split screen from the demo video: the model on the left, the dashboard on the right" width="720">
@@ -70,32 +75,9 @@ The full 3-minute video (narrated, with the model and the dashboard side by side
 
 ## How it works
 
-```mermaid
-flowchart LR
-    subgraph Model["1:100 physical model"]
-        S1["HC-SR04<br/>entrance sensor"]
-        S2["HC-SR04<br/>above stall 0"]
-        LED["status LED"]
-    end
-    subgraph ESP["ESP32 · Arduino core 3.0.1"]
-        SENSE["sensor loop<br/>every 500 ms, hysteresis,<br/>N-sample confirmation"]
-        ALLOC["allocation<br/>road network + A*,<br/>60 s reservations"]
-        WEB["soft-AP SmartParking<br/>HTTP: / and /state"]
-        SER["serial console<br/>new · park · leave · status · check"]
-    end
-    subgraph Clients
-        PHONE["phone or laptop browser<br/>2D / 3D live view,<br/>polls /state every 1 s"]
-        PC["Serial Monitor"]
-    end
-    S1 --> SENSE
-    S2 --> SENSE
-    SENSE --> ALLOC
-    ALLOC --> LED
-    ALLOC --> WEB
-    ALLOC --> SER
-    WEB <--> PHONE
-    SER <--> PC
-```
+<p align="center">
+  <img src="media/architecture.svg" alt="Architecture: two HC-SR04 sensors and the LED on the model, the ESP32 running the sensor loop, allocation, web server and serial console, and the browser dashboard and Serial Monitor as clients" width="100%">
+</p>
 
 ### The physical model
 
@@ -140,17 +122,11 @@ The on-board LED (pin 2) is off while stall 0 is empty, steady when the assigned
 
 ### Allocation: road network and A*
 
-The lot is a small graph built at boot from the measured lengths. Stalls hang off their lane node by a 5 cm edge (the stall length) and can only be a destination, never driven through.
+The lot is a small graph built at boot from the measured lengths, drawn here in the model's real layout. From the entrance one road leads 22 cm to the floor-0 lane; the other climbs the ramp (17.5 cm to its start, 20 cm up and around the U-turn) and enters floor 1, 7.5 cm before its first stall. Neighbouring stalls are one stall width (2.5 cm) apart along their lane, and each stall hangs off its lane point by its length (5 cm): it can only be a destination, never driven through.
 
-```mermaid
-graph LR
-    E((entrance)) -- 22 --> L0[lane 0] -- 2.5 --> L1[lane 1] -- 2.5 --> L2["…"] -- 2.5 --> L6[lane 6]
-    E -- 17.5 --> R[ramp start] -- 20 --> F1[floor-1 entrance] -- 7.5 --> L7[lane 7] -- 2.5 --> L8["…"] -- 2.5 --> L13[lane 13]
-    L0 -. 5 .-> P0[stall 0]
-    L6 -. 5 .-> P6[stall 6]
-    L7 -. 5 .-> P7[stall 7]
-    L13 -. 5 .-> P13[stall 13]
-```
+<p align="center">
+  <img src="media/road_network.svg" alt="Road network of the model drawn in its real layout: entrance at the bottom, floor-0 stalls 0 to 6 on the right at 27.0 to 42.0 cm, ramp and U-turn to floor 1 on the left with stalls 7 to 13 at 50.0 to 65.0 cm" width="100%">
+</p>
 
 - **A\*** runs once per stall at boot. The heuristic is the stall length plus, on the goal's own lane, the remaining distance along the lane; it never overestimates, so the result is the true shortest route. Because the lot is fixed, allocation at run time is a lookup.
 - A new car gets the nearest stall that is free, not reserved for someone else and not blocked, and a **60-second reservation**.
