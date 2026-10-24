@@ -25,7 +25,7 @@
 B.Sc. project in Internet of Things (IoT), Technion – Faculty of Computer Science, 2026.
 **Authors:** Aseel Kurdy · Nayef Habiballah · Osama Abdulhalim. **Instructors:** Itai Dabran · Ido Ram · Diana Cohen.
 
-**Read first:** the [research document](docs/research_document.pdf) (design, related work, simulation study, with the user and programmer manuals attached) and the [poster](docs/poster.pdf).
+**Read first:** the [research document](docs/research_document.pdf) (design, related work, simulation study; the user and programmer manuals are separate files listed below) and the [poster](docs/poster.pdf).
 
 ---
 
@@ -261,7 +261,7 @@ Checked on Python 3.12: all 11 tests pass and `run_all.py` reproduces the files 
 
 | Document | Language | File |
 |---|---|---|
-| **Research document** (stage 3): general description, introduction, related work, project description, simulation, conclusions; appendices: simulation user and programmer guides, parameters and sources, and the two manuals | English | [`docs/research_document.pdf`](docs/research_document.pdf) |
+| **Research document** (stage 3): general description, introduction, related work, project description, simulation, conclusions; appendices: simulation user and programmer guides | English | [`docs/research_document.pdf`](docs/research_document.pdf) |
 | Poster | English | [`docs/poster.pdf`](docs/poster.pdf) |
 | Project documentation (design, measurements, calibration, tests) | Hebrew | [`docs/project_documentation.pdf`](docs/project_documentation.pdf) |
 | User manual | Hebrew | [`docs/user_manual.pdf`](docs/user_manual.pdf) |
