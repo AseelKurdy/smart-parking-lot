@@ -1,6 +1,6 @@
 ﻿# Test report - smart_parking_v9.ino
 
-Run: 2026-10-18 12:42  Target: the host simulator
+Run: 2026-10-24 18:03  Target: the host simulator
 
 **54 passed, 0 failed, 0 errors** of 54
 
@@ -44,13 +44,13 @@ Run: 2026-10-18 12:42  Target: the host simulator
 | TO-2 | Timeout | PASS | Full lot, stranded car (timed out) parks on a reserved spot: displaced car must leave cleanly |
 | SENS-4 | Sensors | PASS | Idle 5 min: sensor glitch rate (<2 cm / no echo) and phantom [SENSOR] events |
 | SOAK-1 | Soak | PASS | ID cap: 500 new+leave cycles; behaviour at id 500 and afterwards |
-| SIM-1 | Sensors | PASS | Entrance sensor (car ~22 cm, wall ~30 cm): one car per visit, a car that stays counts once, noise does not re-arm it, the 26 cm threshold is exact |
+| SIM-1 | Sensors | PASS | Entrance sensor (car ~22 cm, wall ~30 cm): one car per visit, a car that stays counts once, noise does not re-arm it, the 25 cm threshold is exact |
 | SIM-9 | Sensors | PASS | Optional two-lane entrance sensor (exit ~22 cm / entry ~26 cm): exit removes the car at spot 0, then the lowest parked id; empty lot only warns; band edge 24.0 cm |
 | SIM-10 | Sensors | PASS | Optional exit lane: a car leaves spot 0 and then drives through the exit lane - counted once (no second car removed) |
 | SIM-2 | Sensors | PASS | Spot 0 sensor: reserved car parks CORRECT after ~2 s of confirmation, LED steady; leaving frees the spot |
 | SIM-3 | Sensors | PASS | Wrong car at spot 0: newest unparked car parks WRONG, its own reservation is released, LED blinks |
 | SIM-4 | Sensors | PASS | Spot 0 BLOCKED: object with no car on its way is never assigned; clears when the object leaves |
-| SIM-5 | Sensors | PASS | Hysteresis (measured: empty 25-26 cm, car 22.5-23.5 cm): arrive below 24, leave above 24.5; the dead zone between changes nothing |
+| SIM-5 | Sensors | PASS | Hysteresis (measured: empty 25-26 cm; car 2.5 cm high 22.5-23.5 cm, 1.5 cm high 23.5-24.5 cm): arrive below 24.7, leave above 24.9; the dead zone between changes nothing |
 | SIM-6 | Sensors | PASS | Noise immunity: bursts of <2 cm / no-echo readings make no phantom events, and a real car still parks once and never "leaves" |
 | SIM-7 | Sensors | PASS | Sensor event while a car is only reserved elsewhere is handled once (no double park from the physical spot) |
 | SIM-8 | Sensors | PASS | Single false readings (a believable 15 cm on an empty spot / 40 cm on a parked one) are not events: 4 in a row are needed |
@@ -62,21 +62,21 @@ Run: 2026-10-18 12:42  Target: the host simulator
 | VIS-6 | Visual | PASS | Page file sanity: served page is complete, fetches /state, one script block, balanced tags, no external resources |
 
 ## SENS-2 - PASS - check command: ~6 readings, valid echoes, idle values beyond thresholds
-- note: spot sensor idle range: 25.8 .. 25.8 cm (car arrives below 24)
-- note: entrance sensor idle range: 30.0 .. 30.0 cm (a car is counted below 26)
+- note: spot sensor idle range: 25.8 .. 25.8 cm (car arrives below 24.7)
+- note: entrance sensor idle range: 30.0 .. 30.0 cm (a car is counted below 25)
 
 ## P-8 - PASS - Line endings: LF and CRLF work; CR-only does not execute
 - note: CR-only terminator is ignored (Serial Monitor must be set to "Newline" or "Both NL & CR")
 
 ## S-3 - PASS - Command latency: response to "new" within 800 ms
-- note: latency ms: 15, 15, 15, 15, 15, 16
+- note: latency ms: 31, 15, 15, 15, 15, 31
 
 ## TO-1 - PASS - Reservation expires after 60 s (+-4); parked car never times out; staggered cars expire in order
 - note: A timed out at t=60.3s (created t~0)
 - note: late arrival at its ORIGINAL spot counts as WRONG (open design question)
 
 ## SENS-4 - PASS - Idle 5 min: sensor glitch rate (<2 cm / no echo) and phantom [SENSOR] events
-- note: 600 readings: 0 tiny (<2 cm, impossible for HC-SR04) = 0.0%, 0 no-echo = 0.0%, longest run of tiny readings = 0
+- note: 599 readings: 0 tiny (<2 cm, impossible for HC-SR04) = 0.0%, 0 no-echo = 0.0%, longest run of tiny readings = 0
 - note: valid spot readings: 25.8 .. 25.8 cm
 
 ## SOAK-1 - PASS - ID cap: 500 new+leave cycles; behaviour at id 500 and afterwards

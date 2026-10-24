@@ -22,8 +22,10 @@
   <a href="https://github.com/AseelKurdy/smart-parking-lot/releases/tag/v1.0"><img src="https://img.shields.io/badge/%E2%96%B6%20Watch%20the%20demo%20video-3%20min-e07a2e?style=for-the-badge" alt="Watch the 3-minute demo video"></a>
 </p>
 
-B.Sc. IoT project, Technion – Israel Institute of Technology, 2026.
-**Authors:** Aseel Kurdy · Nayef Habiballah · Osama Abdulhalim.
+B.Sc. project in Internet of Things (IoT), Technion – Faculty of Computer Science, 2026.
+**Authors:** Aseel Kurdy · Nayef Habiballah · Osama Abdulhalim. **Instructors:** Itai Dabran · Ido Ram · Diana Cohen.
+
+**Read first:** the [research document](docs/research_document.pdf) (design, related work, simulation study, with the user and programmer manuals attached) and the [poster](docs/poster.pdf).
 
 ---
 
@@ -145,7 +147,9 @@ The ESP32 runs as an access point (`SmartParking`, open network). The page at `h
 - Colours: **blue dashed** = where the next car will be sent · **amber** = reserved, car on its way (with the countdown) · **green** = parked correctly · **red** = wrong stall · **grey** = blocked.
 - A waiting list of cars that entered but have not parked yet, each with its stall and the seconds left.
 
-A *research* build of the same firmware (`firmware/smart_parking_v9_research`) reports distances in metres of the full-size lot, for the report and the simulation.
+A *research* build of the same firmware (`firmware/smart_parking_v9_research`) reports distances in metres of the full-size lot, for the research document and the simulation.
+
+Screenshots of the running system (Wi-Fi, dashboard states, Serial Monitor) are in [`docs/screenshots/`](docs/screenshots).
 
 ## Verification
 
@@ -165,7 +169,7 @@ Details and how to run everything: [`tests/README.md`](tests/README.md).
 
 ## Simulation study
 
-`simulation/` is an independent Python model used in the report to estimate what guided allocation saves in a real lot. It compares an assigned driver with a driver searching alone (who notices every free stall, or only half of them) and with random search, over 20 replications of 3,000 cars per setting, on the 14-stall demo lot and on a 216-stall, three-floor garage; parameters and their sources are in `simulation/params.py`.
+`simulation/` is an independent Python model used in the [research document](docs/research_document.pdf) to estimate what guided allocation saves in a real lot. It compares an assigned driver with a driver searching alone (who notices every free stall, or only half of them) and with random search, over 20 replications of 3,000 cars per setting, on the 14-stall demo lot and on a 216-stall, three-floor garage; parameters and their sources are in `simulation/params.py`.
 
 Headline (garage, 85 % occupancy, versus a driver who sees every free stall): about **85 m and 31 s saved per car**; for the ≈ 548,000 cars such a garage serves in a year that is ≈ 4,700 driver-hours, ≈ 4,700 litres of fuel and ≈ 11 t of CO₂. In the single-lane demo lot the searching driver drives the same route as the assigned one, so savings appear there only when drivers miss free stalls.
 
@@ -190,9 +194,9 @@ smart-parking-lot/
 │   ├── esp32_syntax_check.ps1      compile with the real ESP32 toolchain
 │   ├── last_full_run.txt           log of the last complete run (54/54)
 │   └── README.md
-├── simulation/                     Python study behind the report (lot model, A*, experiments, figures, results)
-├── report/                         the paper (DOCX) and the script + data that generate it
-├── docs/                           project documentation, user manual, programmer manual (PDF) and dashboard screenshots
+├── simulation/                     Python study behind the research document (lot model, A*, experiments, figures, results)
+├── docs/                           research document, project documentation, user and programmer manuals, poster (PDF),
+│                                   screenshots of the running system
 ├── media/                          photos of the model, demo GIF and still
 ├── LICENSE                         MIT
 └── README.md
@@ -246,24 +250,26 @@ powershell -File run_tests.ps1 -Port COM10   # the same suite against the real b
 
 ```powershell
 cd simulation
-pip install numpy matplotlib
-python run_all.py              # a few minutes; writes results/*.csv and figures/*.png
-python test_sim.py
+pip install numpy pandas matplotlib
+python test_sim.py             # 11 checks, a few seconds
+python run_all.py              # about 3 minutes; writes results/*.csv and figures/*.png
 ```
 
-The paper is generated from the simulation output: `python report/export_data.py` collects everything into `report/report_data.json`, and `node report/build_report.js` (needs the `docx` npm package) writes `report/Smart_Parking_Report.docx`.
+Checked on Python 3.12: all 11 tests pass and `run_all.py` reproduces the files in `results/` exactly (fixed random seeds). The full user and programmer guides of the simulation are Appendices A and B of the research document.
 
 ## Documents
 
 | Document | Language | File |
 |---|---|---|
+| **Research document** (stage 3): general description, introduction, related work, project description, simulation, conclusions; appendices: simulation user and programmer guides, parameters and sources, and the two manuals | English | [`docs/research_document.pdf`](docs/research_document.pdf) |
+| Poster | English | [`docs/poster.pdf`](docs/poster.pdf) |
 | Project documentation (design, measurements, calibration, tests) | Hebrew | [`docs/project_documentation.pdf`](docs/project_documentation.pdf) |
 | User manual | Hebrew | [`docs/user_manual.pdf`](docs/user_manual.pdf) |
 | Programmer manual (firmware structure, JSON schema, page functions) | English | [`docs/programmer_manual.pdf`](docs/programmer_manual.pdf) |
-| Paper: *Smart Parking System* (problem, design, simulation study, results) | English | [`report/Smart_Parking_Report.docx`](report/Smart_Parking_Report.docx) |
+| Screenshots of the running system | — | [`docs/screenshots/`](docs/screenshots) |
 
 ## Authors and license
 
-**Aseel Kurdy · Nayef Habiballah · Osama Abdulhalim** — B.Sc. IoT project, Technion – Israel Institute of Technology, 2026.
+**Aseel Kurdy · Nayef Habiballah · Osama Abdulhalim** — B.Sc. project in Internet of Things (IoT), Technion – Faculty of Computer Science, 2026. Instructors: Itai Dabran, Ido Ram, Diana Cohen.
 
 Released under the [MIT License](LICENSE).
